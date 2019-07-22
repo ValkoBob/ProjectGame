@@ -9,13 +9,23 @@ Match3.GameState = {
     this.ANIMATION_TIME = 200;
     this.timeInSeconds = 120;
     this.points = 10;
+    this.soundSwitcher = false;
   },
 
   create: function () {
+    this.music = this.add.audio('backgroundMusic');
+    this.music.loop = true;
+    this.music.play();
     this.background = this.add.sprite(0, 0, 'background');
 
     this.score = this.add.sprite(this.world.centerX, 0, 'score');
     this.score.anchor.setTo(0.5, 0);
+
+    var soundFixButton = this.add.button(0, 0, 'sound', this.changeVolume, this, 0, 1, 2);
+    soundFixButton.name = 'sound';
+    soundFixButton.anchor.setTo(0, 0);
+    soundFixButton.scale.set(0.5, 0.5);
+    soundFixButton.smoothed = false;
 
     this.text = this.add.text(this.world.centerX, 67, '0',
         {font: "64px Arial", fill: "#ffffff", align: "center"});
@@ -36,6 +46,17 @@ Match3.GameState = {
     this.drawBoard();
   },
 
+  changeVolume: function () {
+    console.log(this.soundSwitcher);
+    if (!this.soundSwitcher) {
+      this.game.sound.pauseAll();
+      this.soundSwitcher = true;
+    } else {
+      this.game.sound.resumeAll();
+      this.soundSwitcher = false;
+    }
+  },
+
   updateTimer: function () {
     this.timeInSeconds--;
     var minutes = Math.floor(this.timeInSeconds / 60);
@@ -45,6 +66,7 @@ Match3.GameState = {
 
     if (this.timeInSeconds === 0) {
       this.timeText.destroy();
+      this.music.destroy(true);
       this.timeUp = this.add.sprite(this.world.centerX, this.world.centerY, 'time-up');
       this.timeUp.anchor.setTo(0.5);
       this.timer = this.time.create(false);

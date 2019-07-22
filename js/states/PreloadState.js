@@ -33,6 +33,9 @@ Match3.PreloadState = {
     this.load.image('sound', 'assets/images/btn-sfx.png');
     this.load.image('time-up', 'assets/images/text-timeup.png');
 
+    //tutorial image
+    this.load.image('screen3', 'assets/images/tutorial/Scr_3.png');
+
     this.load.audio('backgroundMusic', ['assets/audio/background.mp3']);
     this.load.audio('kill', ['assets/audio/kill.mp3']);
     this.load.audio('select', ['assets/audio/select-5.mp3']);
